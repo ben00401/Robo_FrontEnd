@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="well jumbotron">
+      <h1><%= title %></h1>
+      
+      
+
+
+    </div>
+
+<table border="1" style="width:100%">
+<tr>
+    <td colspan="2">高風險</td>
+</tr>
+  <tr>
+    <td><img src='<%= high_return %>' height="300" width="420"/></td>
+    <td><img src='<%= high_risk %>' height="300" width="420"/></td>    
+  </tr>
+<tr>
+    <td colspan="2">中高風險</td>
+</tr>
+  <tr>
+    <td><img src='<%= midhigh_return %>' height="300" width="420"/></td>
+    <td><img src='<%= midhigh_risk %>' height="300" width="420"/></td>    
+  </tr>
+<tr>
+    <td colspan="2">中風險</td>
+</tr>
+<tr>
+    <td><img src='<%= middle_return %>' height="300" width="420"/></td>
+    <td><img src='<%= middle_risk %>' height="300" width="420"/></td>    
+  </tr>
+<tr>
+    <td colspan="2">中低風險</td>
+</tr>
+<tr>
+    <td><img src='<%= midlow_return %>' height="300" width="420"/></td>
+    <td><img src='<%= midlow_risk %>' height="300" width="420"/></td>    
+  </tr>
+<tr>
+    <td colspan="2">低風險</td>
+</tr>
+<tr>
+    <td><img src='<%= low_return %>' height="300" width="420"/></td>
+    <td><img src='<%= low_risk %>' height="300" width="420"/></td>    
+  </tr>
+</table>
+
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/profit.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+
+    <div id='benefitContent'>
+    </div>
+    <div id='detail'>
+      <p id='des'>請點選detail按鈕查看細節。</p>
+    </div>
+
+    <script type="text/javascript">
+      
+    	var Content = document.getElementById("benefitContent");
+      var Detail = document.getElementById("detail");
+    	
+     Content.innerHTML = Content.innerHTML + "<% for(var i=0; i < profit.length; i++) { %><table class='benefitTable'><th class='portfolioName' colspan='5'><span><%= profit[i].date %>  投資組合報酬  (%)</span><div class='showInfo' onclick='displayDetail(<%- profit[i].key %>)'>Detail<img class='showBtn' src='images/detail.png'></div></th><tr style='background-color: #d5deff;'><td class='profit'><%= profit[i].today %></td><td class='profit'>1M</td><td class='profit'>3M</td><td class='profit'>6M</td><td class='profit'>1Y</td></tr><tr><% for(var z=0; z < profit[i].total_profit.length; z++) { %><td class='profit'><%= profit[i].total_profit[z] %></td><% } %></tr></table><% } %>"
+
+     Detail.innerHTML = Detail.innerHTML + "<% for(var i=0; i < profit.length; i++) { %><table id=<%- profit[i].key %> class='detailTable' name='detailTable'><% for(var j=0; j < profit[i].profitdata.length; j++) { %><tr><th colspan='6' class='fundName'><%= profit[i].profitdata[j].name %><span style='float:right'>佔比: <%= profit[i].ratio[j] %>%</span></th></tr><tr><td colspan='6' class='fundName'>初始值: <%= profit[i].profitdata[j].start_value %></td></tr><tr style='background-color: #dccf35;'><td></td><td><%= profit[i].today %></td><td>1M</td><td>3M</td><td>6M</td><td>1Y</td></tr><tr><td>淨值</td><% for(var k=0; k < profit[i].profitdata[0].netvalue.length; k++) { %><td><%= profit[i].profitdata[j].netvalue[k] %></td><% } %></tr><tr><td>報酬</td><% for(var l=0; l < profit[i].profitdata[0].profit.length; l++) { %><td><%= profit[i].profitdata[j].profit[l] %></td><% } %></tr><% } %></table><% } %>";
+
+    	function displayDetail(tableID){
+    	var x = document.getElementById(tableID);
+        var y = document.getElementById('des');
+        var alltable = document.getElementsByName('detailTable');
+        for (var i =0; i< alltable.length; i++) {
+          alltable[i].style.display='none';
+        }
+        y.style.display='none';
+    		x.style.display='block';
+    	}
+
+    </script>
+  </body>
+</html>

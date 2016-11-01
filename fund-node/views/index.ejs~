@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/fund.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <div id="fundContent">
+	     <a href="/fund_filter">
+	    	<div class="chooseRef">
+		    	<p class="Riskcontent">計算投資組合 <img width="30px" src="images/arrow.png"/></p>
+	    	</div>
+	    </a>
+
+	    <a href="/API/profit">
+	    	<div class="chooseRef">
+		    	<p class="Riskcontent">
+		    	監控效益
+		    	<img width="30px" src="images/arrow.png"/></p>
+	    	</div>
+	    </a>
+		<a href="/risk">
+	    	<div class="chooseRef">
+		    	<p class="Riskcontent">風險評估 <img width="30px" src="images/arrow.png"/></p>
+	    	</div>
+	    </a>
+    </div>
+  </body>
+</html>

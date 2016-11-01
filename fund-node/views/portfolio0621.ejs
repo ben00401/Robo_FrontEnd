@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/portfolio.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <img class="portfolioImg" src=images/<%= filename %> >
+    <table id='portfolioTable'> 
+    <colgroup>
+	    <col style="">
+	    <col style="" class="col1">
+	    <col style="background-color:#5fd0f7">
+	    <col style="background-color:#9bd69b">
+	    <col style="background-color:;">
+  	</colgroup>
+  	<tr><td width='40%'>基金</td><th width='10%'>最小變異數<br>投資組合</th><th width='10%'>切線<br>投資組合</th><th width='10%'>平均權重<br>投資組合</th><th width='10%'>投資組合</th></tr><% for(var i=0; i < name.length; i++) { %><tr><td class='fundName'><%= name[i] %></td><td class='aaa' onmouseover="hoverCol(this)" onmouseout="leaveCol(this)" onclick='selectCol(this)'><%= weight1[i] %></td><td class='bbb' onmouseover="hoverCol(this)" onmouseout="leaveCol(this)" onclick='selectCol(this)'><%= weight2[i] %></td><td class='ccc' onmouseover="hoverCol(this)" onmouseout="leaveCol(this)" onclick='selectCol(this)'><%= weight3[i] %></td><td><input id='<%= id[i] %>' type='text' class="portfolioInput" /></td></tr><% } %></table>
+  	<input class='portfolioSend' onclick='submitPortfolio()' type='button' value='送出'/>
+
+  	<script>
+  		var ths = document.getElementsByTagName('th');
+		var trs = document.getElementsByTagName('tr');
+		var portfolioData = [];
+
+  		function hoverCol(x){
+  			if (x.classList == 'aaa') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[1].classList.add('hovered');
+				}
+			}
+			else if (x.classList == 'bbb') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[2].classList.add('hovered');
+				}
+			}
+			else if (x.classList == 'ccc') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[3].classList.add('hovered');
+				}
+			}
+  		}
+
+  		function leaveCol(x){
+  			if (x.classList == 'aaa hovered') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[1].classList.remove('hovered');
+				}
+			}
+			else if (x.classList == 'bbb hovered') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[2].classList.remove('hovered');
+				}
+			}
+			else if (x.classList == 'ccc hovered') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[3].classList.remove('hovered');
+				}
+			}
+  		}
+
+  		function selectCol(x){
+
+			if (x.classList == 'aaa hovered') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[1].style.backgroundColor='black';
+					trs[i].children[1].style.color='white';
+
+
+					trs[i].children[2].style.backgroundColor="";
+					trs[i].children[2].style.color="black";
+
+
+					trs[i].children[3].style.backgroundColor="";
+					trs[i].children[3].style.color="black";
+
+					trs[i].children[4].firstChild.value=trs[i].children[1].innerHTML;
+				}
+
+
+
+			}
+
+			else if (x.classList == 'bbb hovered') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[2].style.backgroundColor='black';
+					trs[i].children[2].style.color='white';
+
+
+					trs[i].children[1].style.backgroundColor="";
+					trs[i].children[1].style.color="black";
+
+
+					trs[i].children[3].style.backgroundColor="";
+					trs[i].children[3].style.color="black";
+
+					trs[i].children[4].firstChild.value=trs[i].children[2].innerHTML;
+				}
+			}
+
+			else if (x.classList == 'ccc hovered') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[3].style.backgroundColor='black';
+					trs[i].children[3].style.color='white';
+
+
+					trs[i].children[2].style.backgroundColor="";
+					trs[i].children[2].style.color="black";
+
+
+					trs[i].children[1].style.backgroundColor="";
+					trs[i].children[1].style.color="black";
+
+					trs[i].children[4].firstChild.value=trs[i].children[3].innerHTML;
+				}
+			}
+  		}
+
+  		function submitPortfolio(){
+  			portfolioData.length=0;
+
+  			for (var i=1; i<trs.length; i++) {
+  				portfolioData.push(trs[i].children[4].firstChild.value);
+  			}
+
+  			var json_portfolioData = JSON.stringify(portfolioData);
+			//alert(json_portfolioData+portfolioData.length);
+  		}
+  	</script>
+  </body>
+</html>

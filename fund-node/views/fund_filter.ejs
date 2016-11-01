@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+
+    <link rel='stylesheet' href='/stylesheets/fund_filter.css' />
+    <script>
+    	
+    	function showVal(box,newVal){
+    		if(newVal==19){
+    			document.getElementById("valBox"+box).innerHTML="NO";
+    		}
+    		else{
+    		 	document.getElementById("valBox"+box).innerHTML=newVal;
+    		}
+    	}
+
+    	function submitFilter(){
+
+    		var filterData=[];
+
+    		for (var i =1; i < 7; i++) {
+    			if(document.getElementById("valBox"+i).innerHTML != "NO"){
+    				filterData.push(document.getElementById("valBox"+i).innerHTML);
+    			}
+    			else{
+    				filterData.push("-1");
+    			}
+    		};
+
+    		var Data = {"req_type" : "filter","constraint_3m":filterData[0],"constraint_6m":filterData[1],"constraint_1y":filterData[2],"constraint_2y":filterData[3],"constraint_3y":filterData[4],"constraint_5y":filterData[5]};
+
+
+  			var json_filterData = JSON.stringify(Data);
+			document.getElementById("portfolioSelection").value=json_filterData;
+  			document.getElementById('rankForm').submit();
+  			//alert(json_filterData);
+  			//window.location.href="/get4433";
+  			//window.location.href="/";
+			//alert(json_portfolioData+portfolioData.length);
+  		}
+    </script>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+<a href="/"><span>回首頁</span></a>
+	<form id='rankForm' action='/get4433' method='post'>
+
+    	<span class="time_range">3個月排名:</span>
+    	<input type="range" id="range1" name="range1" min="19" max="300" value="80" oninput="showVal(1,this.value)">  
+    	前<span id="valBox1" class="valBox">80</span>名<br><br>
+
+    	<span class="time_range">6個月排名:</span>
+    	<input type="range" id="range1" name="range1" min="19" max="300" value="80" oninput="showVal(2,this.value)">  
+    	前<span id="valBox2" class="valBox">80</span>名<br><br>
+
+    	<span class="time_range">1年排名:</span>
+    	<input type="range" id="range1" name="range1" min="19" max="300" value="80" oninput="showVal(3,this.value)">  
+    	前<span id="valBox3" class="valBox">80</span>名<br><br>
+
+    	<span class="time_range">2年排名:</span>
+    	<input type="range" id="range1" name="range1" min="19" max="300" value="80" oninput="showVal(4,this.value)">  
+    	前<span id="valBox4" class="valBox">80</span>名<br><br>
+
+    	<span class="time_range">3年排名:</span>
+    	<input type="range" id="range1" name="range1" min="19" max="300" value="80" oninput="showVal(5,this.value)">  
+    	前<span id="valBox5" class="valBox">80</span>名<br><br>
+
+    	<span class="time_range">5年排名:</span>
+    	<input type="range" id="range1" name="range1" min="19" max="300" value="80" oninput="showVal(6,this.value)">  
+    	前<span id="valBox6" class="valBox">80</span>名<br><br>
+
+	<input id='portfolioSelection' name='portfolioSelection' type='text' style='display:none;'/>
+    	<input onclick='submitFilter()' type='button'" value="送出" />
+    </form>
+
+
+  </body>
+</html>

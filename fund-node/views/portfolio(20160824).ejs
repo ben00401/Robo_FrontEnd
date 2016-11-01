@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/portfolio.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <div>
+     
+<img class="portfolioImg" src=<%= file %> >
+
+    <div class="imgTable">
+     <table>
+      <tr><th></th><th>報酬(%)</th><th>風險(%)</th></tr>
+      <tr id="min_var">
+       <td class="portfolio_left">
+       <div class="dot1"></div>最小變異數投資組合</td>
+       <td  style="border-top: 1px solid black;"><%= min_varpoint[1] %></td>
+       <td style="border-top: 1px solid black;"><%= min_varpoint[0] %></td>
+      </tr>
+      <tr id="tangency">
+       <td class="portfolio_left">
+       <div class="dot2"></div>切線投資組合</td>
+       <td><%= tangencypoint[1] %></td>
+       <td><%= tangencypoint[0] %></td>
+      </tr>
+      <tr id = "equalweight">
+       <td class="portfolio_left">
+       <div class="dot3"></div>平均權重投資組合</td>
+       <td><%= eqpoint[1] %></td>
+       <td><%= eqpoint[0] %></td>
+      </tr>
+     </table>
+    </div>
+    </div>
+    <form id='postData' action='/saveportfolio' method='post'>
+    <table id='portfolioTable'> 
+    <colgroup>
+	    <col>
+	    <col style="" class="col1">
+	    <col style="background-color:#5fd0f7">
+	    <col style="background-color:#9bd69b">
+	    <col style="background-color:;">
+  	</colgroup>
+  	<tr class='trclass'><td width='40%'>基金</td><th width='10%'>最小變異數<br>投資組合</th><th width='10%'>切線<br>投資組合</th><th width='10%'>平均權重<br>投資組合</th><th width='10%'>投資組合</th></tr><% for(var i=0; i < name.length; i++) { %><tr class='trclass'><td class='fundName'><%= name[i] %></td><td class='aaa' onmouseover="hoverCol(this)" onmouseout="leaveCol(this)" onclick='selectCol(this)'><%= weight1[i] %></td><td class='bbb' onmouseover="hoverCol(this)" onmouseout="leaveCol(this)" onclick='selectCol(this)'><%= weight2[i] %></td><td class='ccc' onmouseover="hoverCol(this)" onmouseout="leaveCol(this)" onclick='selectCol(this)'><%= weight3[i] %></td><td><input id='<%= id[i] %>' type='text' class="portfolioInput" /></td></tr><% } %></table>
+  	<input id='portfolioSelection' name='portfolioSelection' type='text'/><input class='portfolioSend' onclick='submitPortfolio()' type='button' value='送出'/>
+  	</form>
+  	<script>
+  		var ths = document.getElementsByTagName('th');
+		var trs = document.getElementsByClassName('trclass');
+		var portfolioname = [];
+		var portfolioid = [];
+		var ratio =[];
+		var min_var = document.getElementById('min_var');
+		var tangency = document.getElementById('tangency');
+		var equalweight = document.getElementById('equalweight');
+		
+
+  		function hoverCol(x){
+
+  			if (x.classList == 'aaa') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[1].classList.add('hovered');
+				}
+
+			min_var.children[1].classList.add('hovered');
+			min_var.children[2].classList.add('hovered');
+				
+			}
+			else if (x.classList == 'bbb') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[2].classList.add('hovered');
+				}
+			tangency.children[1].classList.add('hovered');
+			tangency.children[2].classList.add('hovered');
+			}
+			else if (x.classList == 'ccc') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[3].classList.add('hovered');
+				}
+			equalweight.children[1].classList.add('hovered');
+			equalweight.children[2].classList.add('hovered');
+			}
+  		}
+
+  		function leaveCol(x){
+  			if (x.classList == 'aaa hovered') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[1].classList.remove('hovered');
+				}
+			min_var.children[1].classList.remove('hovered');
+			min_var.children[2].classList.remove('hovered');
+
+			}
+			else if (x.classList == 'bbb hovered') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[2].classList.remove('hovered');
+				}
+			tangency.children[1].classList.remove('hovered');
+			tangency.children[2].classList.remove('hovered');
+			}
+			else if (x.classList == 'ccc hovered') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[3].classList.remove('hovered');
+				}
+			equalweight.children[1].classList.remove('hovered');
+			equalweight.children[2].classList.remove('hovered');
+			}
+  		}
+
+  		function selectCol(x){
+
+			if (x.classList == 'aaa hovered') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[1].style.backgroundColor='black';
+					trs[i].children[1].style.color='white';
+
+
+					trs[i].children[2].style.backgroundColor="";
+					trs[i].children[2].style.color="black";
+
+
+					trs[i].children[3].style.backgroundColor="";
+					trs[i].children[3].style.color="black";
+
+					trs[i].children[4].firstChild.value=trs[i].children[1].innerHTML;
+				}
+
+
+
+			}
+
+			else if (x.classList == 'bbb hovered') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[2].style.backgroundColor='black';
+					trs[i].children[2].style.color='white';
+
+
+					trs[i].children[1].style.backgroundColor="";
+					trs[i].children[1].style.color="black";
+
+
+					trs[i].children[3].style.backgroundColor="";
+					trs[i].children[3].style.color="black";
+
+					trs[i].children[4].firstChild.value=trs[i].children[2].innerHTML;
+				}
+			}
+
+			else if (x.classList == 'ccc hovered') {
+				for (var i=0; i<trs.length; i++) {
+					trs[i].children[3].style.backgroundColor='black';
+					trs[i].children[3].style.color='white';
+
+
+					trs[i].children[2].style.backgroundColor="";
+					trs[i].children[2].style.color="black";
+
+
+					trs[i].children[1].style.backgroundColor="";
+					trs[i].children[1].style.color="black";
+
+					trs[i].children[4].firstChild.value=trs[i].children[3].innerHTML;
+				}
+			}
+  		}
+
+  		function submitPortfolio(){
+  			//portfolioData.length=0;
+			portfolioname.length = 0;
+			portfolioid.length = 0;
+			ratio.length = 0;
+			sum_ratio = 0;
+
+  			for (var i=1; i<trs.length; i++) {
+				portfolioname.push(trs[i].children[0].innerHTML);
+				portfolioid.push(trs[i].children[4].firstChild.id);
+  				ratio.push(trs[i].children[4].firstChild.value);
+				sum_ratio = sum_ratio + parseFloat(trs[i].children[4].firstChild.value);
+  			}
+
+			ratio.forEach(function(value,index,array){          
+
+      				array[index] = value / (sum_ratio) ;
+				})
+			
+			var timeInMs = Date.now();
+			var portfoliokey = 'admin'+timeInMs;
+  			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+
+			if(dd<10) {
+    					dd='0'+dd
+			} 
+
+			if(mm<10) {
+   					 mm='0'+mm
+			} 
+
+			//today = yyyy+'-'+mm+'-'+dd;
+			today = '2015-01-01'
+
+			//alert(ratio);
+
+			var json_portfolioData ={"id_array":portfolioid,"ratio":ratio,"user":"admin","date":today,"portfoliokey":portfoliokey};
+			var json_Selection = JSON.stringify(json_portfolioData);
+			document.getElementById("portfolioSelection").value=json_Selection;
+			//alert(document.getElementById("portfolioSelection").value);
+			document.getElementById('postData').submit();
+
+  		}
+  	</script>
+  </body>
+</html>

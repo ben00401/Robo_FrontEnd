@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/fund.css' />
+    <script type="text/javascript" src="javascripts/get4433.js"></script>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <div id="fundContent">
+	     
+    </div>
+
+    <script>
+    
+	var Content = document.getElementById("fundContent");  
+	    	Content.innerHTML = "<table id='dataTable'><tr><td width='35%'>基金</td><td width='10%'>排序(3 M)</td><td width='10%'>排序(6 M)</td><td width='10%'>排序(1 Y)</td><td width='10%'>排序(2 Y)</td><td width='10%'>排序(3 Y)</td><td width='10%'>排序(5 Y)</td></tr><% for(var i=0; i < name.length; i++) { %><tr id='<%= id[i] %>' onclick='selectRow(this)'><td class='fundName'><%= name[i] %></td><td><%= rank_3m[i] %></td><td><%= rank_6m[i] %></td><td><%= rank_1y[i] %></td><td><%= rank_2y[i] %></td><td><%= rank_3y[i] %></td><td><%= rank_5y[i] %></td></tr><% } %></table>";
+
+	    	Content.innerHTML = Content.innerHTML + "<br><br><br><input id='selectAll' onclick='selectAll()' type='checkbox' /><span class='selectLabel'>全選</span><form id='postData' action='/portfolio' method='post'><input id='portfolioSelection' name='portfolioSelection' type='text'/><input class='selectSend' onclick='submitFund()' type='button' value='送出'/></form>";
+		
+	
+    </script>
+  </body>
+</html>

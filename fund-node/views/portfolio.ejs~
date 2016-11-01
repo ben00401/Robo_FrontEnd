@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/portfolio.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+<a href="/"><span>回首頁</span></a>
+    <div id='portfolioContent'>
+    </div>
+
+    <div id='benefitContent'>
+    </div>
+    
+    <div id='detail'>
+      <p id='des'>請點選detail按鈕查看細節。</p>
+    </div>
+
+    <script type="text/javascript">
+      
+      var PortfolioContent = document.getElementById("portfolioContent");
+    	var Content = document.getElementById("benefitContent");
+      var Detail = document.getElementById("detail");
+
+      PortfolioContent.innerHTML = PortfolioContent.innerHTML + "<table class='portfolioTable'><th class='portfolioName' colspan='13'><span>切線投資組合</span></th><tr class='dateStyle'><td class='profit'></td><% for(var i=0; i < portfolio_date.length; i++) { %><td class='profit'><%= portfolio_date[i] %></td><% } %></tr><tr><td class='profit'>報酬</td><% for(var j=0; j < portfolio_point.length; j++) { %><td class='profit'><%= portfolio_point[j][1] %></td><% } %></td></tr><tr><td class='profit'>風險</td><% for(var j=0; j < portfolio_point.length; j++) { %><td class='profit'><%= portfolio_point[j][0] %></td><% } %></tr> <th class='portfolioName' colspan='13'><span>基金資料</span></th><tr class='dateStyle'><td class='profit'></td><% for(var i=0; i < portfolio_date.length; i++) { %><td class='profit'><%= portfolio_date[i] %></td><% } %></tr><% for(var z=0; z < portfolio_name.length; z++) { %><tr><td class='profit'><%= portfolio_name[z] %></td><% for(var x=0; x < portfolio_weight.length; x++) { %><td class='profit'><%= portfolio_weight[x][z] %></td><% } %></tr><% } %></table>"
+
+    	
+
+     Content.innerHTML = Content.innerHTML + "<% for(var i=0; i < profit.length; i++) { %><table class='benefitTable'><th class='portfolioName' colspan='5'><span><%= profit[i].date %>  投資組合報酬  (%)</span><a href='#detail' style='color:black;display:initial;'><div class='showInfo' onclick='displayDetail(<%- profit[i].key %>)'>Detail<img class='showBtn' src='images/detail.png'></div></a></th><tr style='background-color: #d5deff;'><td class='profit'>1M</td><td class='profit'>3M</td><td class='profit'>6M</td><td class='profit'>1Y</td></tr><tr><% for(var z=0; z < profit[i].total_profit.total_profit.length; z++) { %><td class='profit'><%= profit[i].total_profit.total_profit[z] %></td><% } %></tr></table><% } %>"
+
+     Detail.innerHTML = Detail.innerHTML + "<% for(var i=0; i < profit.length; i++) { %><div class='fund <%- profit[i].key %>' name='fund' onclick='displayDetail(<%- profit[i].key %>)'>基金資料</div><div class='date <%- profit[i].key %>' name='date' onclick='displayDateTable(<%- profit[i].key %>)'>投資組合資料</div> <table id=<%- profit[i].key %> class='detailTable' name='detailTable'><% for(var j=0; j < profit[i].profitdata.length; j++) { %><tr><th colspan='6' class='fundName'><%= profit[i].profitdata[j].name %><span style='float:right'>佔比: <%= profit[i].ratio[j] %>%</span></th></tr><tr><td colspan='6' class='fundName'>初始值: <%= profit[i].profitdata[j].start_value %></td></tr><tr style='background-color: #dccf35;'><td></td><td>1M</td><td>3M</td><td>6M</td><td>1Y</td></tr><tr><td>淨值</td><% for(var k=0; k < profit[i].profitdata[0].netvalue.length; k++) { %><td><%= profit[i].profitdata[j].netvalue[k] %></td><% } %></tr><tr><td>報酬</td><% for(var l=0; l < profit[i].profitdata[0].profit.length; l++) { %><td><%= profit[i].profitdata[j].profit[l] %></td><% } %></tr><% } %></table> <table class='dateTable <%- profit[i].key %>' name='dateTable'><tr><th>日期</th><th>報酬率</th></tr><% for(var j=0; j < profit[i].total_profit.total_daily_profit.date.length; j++) { %><tr><td><%- profit[i].total_profit.total_daily_profit.date[j] %></td><td><%- profit[i].total_profit.total_daily_profit.total_daily_profit[j] %></td></tr><% } %></table><% } %>";
+
+    	function displayDetail(tableID){
+    		var x = document.getElementById(tableID);
+        var y = document.getElementById('des');
+
+        var alltable = document.getElementsByName('detailTable');
+        var allfund = document.getElementsByName('fund');
+        var alldate = document.getElementsByName('date');
+
+        //全部關起來
+        for (var i =0; i< alltable.length; i++) {
+          alltable[i].style.display='none';
+          allfund[i].style.display='none';
+          alldate[i].style.display='none';
+        }
+
+        //把要展開的展開
+        var datetables = document.getElementsByName('dateTable');
+
+        //投資組合資料全部關起來
+        for (var i =0; i< datetables.length; i++) {
+          datetables[i].style.display='none';
+        }
+
+        y.style.display='none';
+    		x.style.display='block';
+
+
+        document.getElementsByClassName(tableID)[0].style.display='inline-block';
+        document.getElementsByClassName(tableID)[1].style.display='inline-block';
+    	}
+
+
+      function displayDateTable(tableID){
+        //全部投資組合table 
+        var datetables = document.getElementsByName('dateTable');
+
+        //通通關起來
+        for (var i =0; i< datetables.length; i++) {
+          datetables[i].style.display='none';
+        }
+
+        //把要展開的展開
+        document.getElementById(tableID).style.display='none';
+        document.getElementsByClassName(tableID)[2].style.display='block';
+      }
+
+    </script>
+  </body>
+</html>
